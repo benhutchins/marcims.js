@@ -6,7 +6,6 @@ class Bot {
     this.settings = _.extend({
       endpoint: 'http://en.wikipedia.org:80/w/api.php',
       index: 'http://en.wikipedia.org:80/w/index.php',
-      rate: 60e3 / 10,
       byeline: '(using the MediaWiki module for Node.js)'
     }, config)
   }
