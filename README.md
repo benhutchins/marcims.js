@@ -6,14 +6,17 @@ This is an example helper to work with marcims.org's api.
 
 First, install all the dependencies:
 
-```npm install``
+```
+npm install
+```
 
 
 If you are using this in your own repo:
 
-```npm install --save https://github.com/benhutchins/marcims.js.git```
+```
+npm install --save https://github.com/benhutchins/marcims.js.git
+```
 
 ## Using
 
 See `index.js` for an example of how to work with this module.
-
