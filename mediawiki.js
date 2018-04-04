@@ -10,15 +10,19 @@ class Bot {
     }, config)
   }
 
-  get (args, requestIndex) {
-    return this._request(args, 'GET', requestIndex)
+  get (args, requestIndex, jsonResponse) {
+    return this._request(args, 'GET', requestIndex, jsonResponse)
   }
 
-  post (args, requestIndex) {
-    return this._request(args, 'POST', requestIndex)
+  post (args, requestIndex, jsonResponse) {
+    return this._request(args, 'POST', requestIndex, jsonResponse)
   }
 
-  _request (args, method, requestIndex) {
+  _request (args, method, requestIndex, jsonResponse) {
+    if (_.isNil(jsonResponse)) {
+      jsonResponse = true
+    }
+
     return new Promise((resolve, reject) => {
       args.format = 'json' // we will always expect JSON
 
@@ -34,15 +38,19 @@ class Bot {
         if (!error && response.statusCode === 200) {
           let data = {}
 
-          try {
-            data = JSON.parse(body)
-          } catch (err) {
-            return reject(err)
-          } finally {
-            resolve(data)
+          if (jsonResponse === false) {
+            resolve(body)
+          } else {
+            try {
+              data = JSON.parse(body)
+            } catch (err) {
+              return reject(err)
+            } finally {
+              resolve(data)
+            }
           }
         } else {
-          reject(new Error(response.statusCode))
+          reject(new Error(response ? response.statusCode : 'Unkown error'))
         }
       })
     })
@@ -100,6 +108,22 @@ class Bot {
       'p[format]': 'geojson',
       'p[limit]': '100'
     }, true)
+  }
+
+  /**
+   * Perform a semantic query and get back results as GeoRSS
+   *
+   * @param {string} [query] SMW Query Text to pass along.
+   * @return {Promise<object>} A promise which resolves with a decoded GeoJSON object.
+   */
+  georss (query) {
+    return this.get({
+      title: 'Special:Ask',
+      q: (query || []).concat(['[[Geometry::+]]']).join('\r\n'),
+      po: ['?Geometry', '?Category'].join('\r\n'),
+      'p[format]': 'georss',
+      'p[limit]': '100'
+    }, true, false)
   }
 
   /**

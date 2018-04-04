@@ -6,12 +6,12 @@
 const _ = require('lodash')
 const MediaWiki = require('./mediawiki')
 
-const username = ''
-const password = ''
+const username = 'bhutchins2'
+const password = 'MARCIMSmarcims-12345'
 
 const bot = new MediaWiki.Bot({
-  endpoint: 'https://….marcims.org/api.php',
-  index: 'https://….marcims.org/index.php'
+  endpoint: 'https://aptima-prod.marcims.org/api.php',
+  index: 'https://aptima-prod.marcims.org/index.php'
 })
 
 bot.login(username, password)
@@ -19,7 +19,11 @@ bot.login(username, password)
     console.log('logged in!', data)
 
     // now that we are logged in, start a new geojson request, you can pass it a query
-    return bot.geojson(['[[Has operation::MARCIMS Training]]'])
+    return bot.georss(['[[Has operation::MARCIMS Training]][[Category:Bridge Assessment]]'])
+  })
+  .then((georss) => {
+    console.log('georss', georss)
+    return bot.geojson(['[[Has operation::MARCIMS Training]][[Category:Bridge Assessment]]'])
   })
   .then((geojson) => {
     console.log('geojson data', geojson)
