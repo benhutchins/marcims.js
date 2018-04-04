@@ -18,12 +18,14 @@ bot.login(username, password)
   .then((data) => {
     console.log('logged in!', data)
 
-    // now that we are logged in, start a new geojson request, you can pass it a query
+    // now that we are logged in, start a new georss request, you can pass it a query
     return bot.georss(['[[Has operation::MARCIMS Training]][[Category:Bridge Assessment]]'])
   })
   .then((georss) => {
     console.log('georss', georss)
-    return bot.geojson(['[[Has operation::MARCIMS Training]][[Category:Bridge Assessment]]'])
+
+    // now an example of requesting geojson data
+    return bot.geojson(['[[Has operation::MARCIMS Training]]'])
   })
   .then((geojson) => {
     console.log('geojson data', geojson)
