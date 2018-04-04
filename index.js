@@ -6,12 +6,12 @@
 const _ = require('lodash')
 const MediaWiki = require('./mediawiki')
 
-const username = 'bhutchins2'
-const password = 'MARCIMSmarcims-12345'
+const username = ''
+const password = ''
 
 const bot = new MediaWiki.Bot({
-  endpoint: 'https://aptima-prod.marcims.org/api.php',
-  index: 'https://aptima-prod.marcims.org/index.php'
+  endpoint: 'https://….marcims.org/api.php',
+  index: 'https://….marcims.org/index.php'
 })
 
 bot.login(username, password)
