@@ -83,7 +83,7 @@ class Bot {
   }
 
   getUserName () {
-    return this.userinfo().then((userinfo) => {
+    return this.getUserInfo().then((userinfo) => {
       return userinfo.name
     })
   }
